@@ -18,7 +18,7 @@ var appName		= 'MoodViz',
 	app_creds 	= require('./app_credentials.js'), //see app_credentials__template.js
 	oauth 		= app_creds.getOAuthSettings(appName),
 	accesstoken = app_creds.getAccessToken(appName),
-	a140_appId	= app_creds.getSentiment140AppId(appName),
+	s140_appId	= app_creds.getSentiment140AppId(appName),
 	// define ports
 	ports 		= require('./ports.js'),
 	fileServer_port   	= ports.getFileServerPort(),
@@ -79,7 +79,7 @@ io.sockets.on('connection', function (socket) {
 			var sentiment140_API			= 'http://www.sentiment140.com/api/',
 				sentiment140_simpleClassify = 'classify',
 				sentiment140_bulkClassify 	= 'bulkClassifyJson',
-				sentiment140_appId 			= '?appid=' + a140_appId,
+				sentiment140_appId 			= '?appid=' + s140_appId,
 				sentiment140_url 			= sentiment140_API + sentiment140_bulkClassify + sentiment140_appId;
 
 			// define topics to watch on twitter
