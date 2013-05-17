@@ -19,7 +19,7 @@ var appName		= 'MoodViz',
 	oauth 		= app_creds.getOAuthSettings(appName),
 	accesstoken = app_creds.getAccessToken(appName),
 	s140_appId	= app_creds.getSentiment140AppId(appName),
-	// define ports
+	// get ports
 	ports 		= require('./ports.js'),
 	fileServer_port   	= ports.getFileServerPort(),
 	websocket_port    	= ports.getWebsocketPort();
@@ -57,11 +57,12 @@ try {
 /***** /STATIC FILE SERVER *****/
 
 /***** WEBSOCKETS SERVER *****/
+io.set('log level', 2); // reduce logging (Log levels: 0 - error / 1 - warn / 2 - info / 3 - debug)
 io.sockets.on('connection', function (socket) {
   	socket.emit('connected', { hello: 'Welcome to the party!' });
 
   	// create a twitter object using ntwitter
-  	console.log('Creating twitter object');
+  	console.log('Creating twitter object...');
 	var twitter = new ntwitter({
 	  	consumer_key: oauth.consumer_key,
 	  	consumer_secret: oauth.consumer_secret,
@@ -79,7 +80,7 @@ io.sockets.on('connection', function (socket) {
 		console.log('Verifying twitter credentials...');
 		twitter.verifyCredentials(function (err, data) {
 			if (err == null) {
-				console.log('Credentials verified for: ' + data.name);
+				console.log('Credentials verified for: ' + data.name + '\n' + 'starting: ' + mode + ' for ' + keywords);
 
 				switch (mode) {
 					case 'search':
@@ -88,6 +89,7 @@ io.sockets.on('connection', function (socket) {
 						if (keywords.length > 1) {
 							for (key in keywords) { 
 								searchQuery += keywords[key];
+								// if not specified, use OR by default
 								if (key < keywords.length-1) {searchQuery += ' OR '};
 							}
 						} else {
@@ -95,21 +97,22 @@ io.sockets.on('connection', function (socket) {
 						}
 
 						// search for tweets
-						twitter.search(searchQuery, {}, function(err, data) {
-						  	//console.log(data);
-							console.log(s140_requestBuilder.bulk.getBody(data));
+						twitter.search(searchQuery, {}, function(err, raw_tweets) {
+						  	//console.log(raw_tweets);
+
+						  	//TODO: filter out tweets that are not in English
 
 						  	// POST tweet to Sentiment140 API
 				            request.post({
 				              	headers: {'content-type' : 'application/x-www-form-urlencoded'},
 				              	url:     s140_requestBuilder.bulk.getUrl(),
-				              	body:    s140_requestBuilder.bulk.getBody(data),
+				              	body:    s140_requestBuilder.bulk.getBody(raw_tweets),
 				            }, function(error, response, body){
 				            	// handle response from Sentiment140 API
 				              	if (!error && response.statusCode == 200) {
 				                	try {
 				                  		var tweets_polarised = JSON.parse(body);
-				                  		socket.emit(respondOn, tweets_polarised);
+				                  		socket.emit(respondOn, {'raw_tweets': raw_tweets, 'tweets_polarised': tweets_polarised });
 									} catch (err) {
 				                		console.error('JSON did not parse. Error: ' + err);
 				                	}
@@ -129,16 +132,19 @@ io.sockets.on('connection', function (socket) {
 						    'statuses/filter',
 						    { track: keywords },
 						    function(stream) {
-						        stream.on('data', function(tweet) {
-						            //console.log(tweet.created_at + ": " + tweet.user.name + " said: " + tweet.text); //preview received tweet
-						 
+						        stream.on('data', function(raw_tweet) {
+						 			//console.log(raw_tweet);
+
+						 			//skip tweets that are not in English
+						 			if (raw_tweet.user.lang != 'en') {return; }
+
 						  			// make GET request to Sentiment140 API
-						            request(s140_requestBuilder.simple(tweet), function (error, response, body) {
+						            request(s140_requestBuilder.simple(raw_tweet), function (error, response, body) {
 						            	// handle response from Sentiment140 API
 						              	if (!error && response.statusCode == 200) {
 						                	try {
 						                  		var tweet_polarised = JSON.parse(body);
-						                  		socket.emit(respondOn, tweet_polarised);
+						                  		socket.emit(respondOn, {'raw_tweet': raw_tweet, 'tweet_polarised': tweet_polarised });
 											} catch (err) {
 						                		console.error('JSON did not parse. Error: ' + err);
 						                	}
@@ -183,22 +189,32 @@ var s140_requestBuilder = {
 	sentiment140_appId 			: '?appid=' + s140_appId,
 
 	simple: function(tweet) {
-		var text = "?text=" + tweet.text.replace(/\s/g,"+");
-		return this.sentiment140_API + this.sentiment140_simpleClassify + text;
+		try {
+			var text = "?text=" + tweet.text.replace(/\s/g,"+");
+			return this.sentiment140_API + this.sentiment140_simpleClassify + text;
+		} catch (err) {
+			console.error('Could not build simple request. Error: ' + err);
+			return null;
+		}		
 	},
 
 	bulk: {
 		getUrl: function() {
-			// I can't seem to create a 'super' reference to grab the link components...
+			// I can't seem to create a 'super' reference to grab the link components... so I referenced them statically
 			return s140_requestBuilder.sentiment140_API + s140_requestBuilder.sentiment140_bulkClassify + s140_requestBuilder.sentiment140_appId;
 		},
 
 		getBody: function(tweets) {
-			var data = [];
-			for (key in tweets.results) {
-				data.push({ "text": tweets.results[key].text });
+			try {
+				var data = [];
+				for (key in tweets.results) {
+					data.push({ "text": tweets.results[key].text });
+				}
+				return JSON.stringify({ "data": data });
+			} catch (err) {
+			console.error('Could not build bulk request. Error: ' + err);
+			return null;
 			}
-			return JSON.stringify({ "data": data });
 		},
 	}
 }
