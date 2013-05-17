@@ -1,12 +1,37 @@
 <html>
+
     <head>
         <title>MoodViz</title>
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
+        <!-- include stylesheets and JS files -->
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <script type="text/javascript" src='http://code.jquery.com/jquery-1.7.2.min.js'></script>
+        <script type="text/javascript" src='ports.js'></script>
+        <script type="text/javascript" src='scripts.js'></script>
     </head>
+
     <body>
-        <h1>Hello, World!</h1>
+        <div id="header" class="container">
+            <h1>MoodViz by <i>@hadi_michael</i></h1>
+
+        </div>
+
+        <div id="visualiser" class="container">
+            <h3>Tracking stats</h3>
+            <p>Positive: <span id="positive"></span>
+            <br />Neutral: <span id="neutral"></span>
+            <br />Negative: <span id="negative"></span>
+            <br />Total: <span id="total"></span>
+        </div>
+        
+        <div id="recent_tweets" class="container">
+            <h3>Recent tweets</h3>
+            <ul id="recent_tweets_ticker" class="ticker">
+            </ul>
+        </div>
     </body>
+
 </html>
