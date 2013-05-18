@@ -111,6 +111,8 @@ io.sockets.on('connection', function (socket) {
 				            	// handle response from Sentiment140 API
 				              	if (!error && response.statusCode == 200) {
 				                	try {
+										//console.log(body);
+
 				                  		var tweets_polarised = JSON.parse(body);
 				                  		socket.emit(respondOn, {'raw_tweets': raw_tweets, 'tweets_polarised': tweets_polarised });
 									} catch (err) {
@@ -143,6 +145,8 @@ io.sockets.on('connection', function (socket) {
 						            	// handle response from Sentiment140 API
 						              	if (!error && response.statusCode == 200) {
 						                	try {
+						                		//console.log(body);
+
 						                  		var tweet_polarised = JSON.parse(body);
 						                  		socket.emit(respondOn, {'raw_tweet': raw_tweet, 'tweet_polarised': tweet_polarised });
 											} catch (err) {
