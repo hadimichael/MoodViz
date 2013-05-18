@@ -15,16 +15,29 @@
 
     <body>
         <div id="header" class="container">
-            <h1>MoodViz by <i>@hadi_michael</i></h1>
-
+            <h1>MoodViz</h1>
         </div>
 
-        <div id="visualiser" class="container">
-            <h3>Tracking stats</h3>
-            <p>Positive: <span id="positive"></span>
-            <br />Neutral: <span id="neutral"></span>
-            <br />Negative: <span id="negative"></span>
-            <br />Total: <span id="total"></span>
+        <div id="stats" class="container">
+            <div id="about" class="column left">
+                <h3>About</h3>
+                <span style="text-align:justify"><p>MoodViz is a sentiment visualiser for Twitter. This is a community project and you are encouraged to contribute to the code.
+                    Check it out on GitHub at:</p></span>
+                <span style="text-align:center"><p>http://github.com/hadimichael/MoodViz</p></span>
+                <span style="text-align:right"><p><i>@hadi_michael</i></p></span>
+            </div>
+            <div id="stats_text" class="column middle">
+                <h3>Tracking sentiment for: <span id="keywords"></span></h3>
+                <p>Positive tweets: <span id="positive"></span>
+                <br />Negative tweets: <span id="negative"></span>
+                <br />Neutral or undetermined: <span id="neutral"></span></p>
+                <hr />
+                <br />Total number of tweets analysed: <span id="total"></span>
+            </div>
+            <div id="stats_graph" class="column right">
+                <h3>Graph</h3>
+                <div id="graph"></div>
+            </div>
         </div>
         
         <div id="recent_tweets" class="container">
