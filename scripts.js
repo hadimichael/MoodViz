@@ -27,13 +27,12 @@ $(function(){
     var script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = 'http://localhost:' + ports.getWebsocketPort() + '/socket.io/socket.io.js';
-    //script.onreadystatechange = MoodViz.init();
 
     script.onload = function() { 
         var socket = io.connect('http://localhost:' + ports.getWebsocketPort()); 
 
         var getTweets_data = {
-          keywords: ['obama', 'new york'], // in an array format
+          keywords: ['telstra', 'new york'], // in an array format
           mode: 'stream',
           respondOn: 'tweet',
         }
@@ -41,24 +40,39 @@ $(function(){
         socket.on('connected', function (message) {
             console.log(message); //display message
 
+            // counter = 0;
+            // for (var i = 0;i<5;i++) {
+            //   if (counter > 4) {counter = 0}
+            //   var polarity = getPolarity(counter.toString());
+            //   var $res = $('<li class=\'' + polarity + '\'><span class=\'ticker-image\'>');
+            //   $res.append('<img src=\"https://si0.twimg.com/profile_images/3355622120/abe783444f418c35d3aff56f6ba98d6a_bigger.png\" /></span>');
+            //   $res.append('<span class=\'ticker-text\'>' + 'This is a short tweet about this cool website' + '</span>');
+            //   $res.prependTo($('#recent_tweets_ticker'));
+            //   counter += 2;
+            // }
+            // updateStats(getTweets_data);
+
+            //set start time
+            var starttime = new Date();
+            $('#starttime').text(starttime.today() + " at " + starttime.timeNow());
             socket.emit('getTweets', getTweets_data);
         });
 
         var tickerCount = 0, tickerSize = 5;
         socket.on(getTweets_data.respondOn, function (response) {
             //var tweet = "Polarity: " + response.tweet_polarised.results.polarity.toString() + " for: " + response.tweet_polarised.results.text.toString();
-            //addtext(tweet);
             //console.log(response);
+
             var polarity = getPolarity(response.tweet_polarised.results.polarity.toString());
-            var $res = $('<li class=\'' +  + '\'><span class=\'ticker-image\'>');
+            var $res = $('<li class=\'' + polarity + '\'><span class=\'ticker-image\'>');
             $res.append('<img src="' + response.raw_tweet.user.profile_image_url.toString() + '" /></span>');
             $res.append('<span class=\'ticker-text\'>' + response.tweet_polarised.results.text.toString() + '</span>');
             $res.prependTo($('#recent_tweets_ticker'));
             tickerCount++;
 
-            if (tickerCount > tickerSize) { $('#recent_tweets_ticker li:last').remove(); }
+            if (tickerCount > tickerSize) { $('#recent_tweets_ticker li:last').remove(); } 
 
-            
+            updateStats(getTweets_data);           
         });
     };
 
@@ -68,12 +82,12 @@ $(function(){
     function getPolarity(polarity) {
       switch (polarity) {
         case '0':
-          stats.negative++;
+          stats.negatives++;
           return 'negative';
           break;
 
         case '2':
-          stats.neutral++;
+          stats.neutrals++;
           return 'neutral';
           break;
 
@@ -88,11 +102,33 @@ $(function(){
       }
     }
 
-    function updateStats() {
-      $('positive').text(stats.positive);
-      $('neutral').text(stats.neutral);
-      $('negative').text(stats.negative);
-      $('positive').text(stats.positive+stats.neutral+stats.negative);
+    function updateStats(getTweets_data) {
+      $('#keywords').text(getTweets_data.keywords);
+
+      $('#positive').text(stats.positives);
+      $('#neutral').text(stats.neutrals);
+      $('#negative').text(stats.negatives);
+      $('#total').text(stats.positives+stats.neutrals+stats.negatives);
+
+      //prepare data for graph
+      var data = [
+        { label: "Positive",  data: stats.positives, color: 'rgba(0, 255, 0, .5)'},
+        { label: "Negative",  data: stats.negatives, color: 'rgba(255, 0, 0, .5)'},
+      ];
+
+      // plot on DONUT
+      $.plot($("#donut"), data, 
+      {
+        series: {
+          pie: { 
+            innerRadius: 0.3,
+            show: true,
+            stroke: {
+              width: 0
+            },
+          }
+        },
+      });
     }
 });
 
