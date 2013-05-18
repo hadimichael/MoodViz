@@ -9,6 +9,8 @@
         <!-- include stylesheets and JS files -->
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script type="text/javascript" src='http://code.jquery.com/jquery-1.7.2.min.js'></script>
+        <script src='/jquery.flot/jquery.flot.js'></script>
+        <script type="text/javascript" src="/jquery.flot/jquery.flot.pie.js"></script>
         <script type="text/javascript" src='ports.js'></script>
         <script type="text/javascript" src='scripts.js'></script>
     </head>
@@ -32,16 +34,15 @@
                 <br />Negative tweets: <span id="negative"></span>
                 <br />Neutral or undetermined: <span id="neutral"></span></p>
                 <hr />
-                <br />Total number of tweets analysed: <span id="total"></span>
+                <br /><span id="total"></span> tweets analysed since <span id="starttime"></span>
             </div>
             <div id="stats_graph" class="column right">
-                <h3>Graph</h3>
-                <div id="graph"></div>
+                <div id="donut" class="graph"></div>
             </div>
         </div>
         
         <div id="recent_tweets" class="container">
-            <h3>Recent tweets</h3>
+            <h3>Some recent tweets</h3>
             <ul id="recent_tweets_ticker" class="ticker">
             </ul>
         </div>
