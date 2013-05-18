@@ -26,10 +26,10 @@ $(function(){
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = 'http://localhost:' + ports.getWebsocketPort() + '/socket.io/socket.io.js';
+    script.src = window.location.origin.replace(ports.getFileServerPort().toString(),ports.getWebsocketPort().toString()) + '/socket.io/socket.io.js';
 
     script.onload = function() { 
-        var socket = io.connect('http://localhost:' + ports.getWebsocketPort()); 
+        var socket = io.connect(window.location.origin.replace(ports.getFileServerPort().toString(),ports.getWebsocketPort().toString())); 
 
         var getTweets_data = {
           keywords: ['telstra', 'new york'], // in an array format
@@ -40,6 +40,7 @@ $(function(){
         socket.on('connected', function (message) {
             console.log(message); //display message
 
+            //USE THIS TO DEBUG THE UI!
             // counter = 0;
             // for (var i = 0;i<5;i++) {
             //   if (counter > 4) {counter = 0}
