@@ -6,46 +6,49 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-        <!-- include stylesheets and JS files -->
+        <!-- include stylesheets -->
         <link rel="stylesheet" type="text/css" href="styles.css">
-        <script type="text/javascript" src='http://code.jquery.com/jquery-1.7.2.min.js'></script>
-        <script src='/jquery.flot/jquery.flot.js'></script>
-        <script type="text/javascript" src="/jquery.flot/jquery.flot.pie.js"></script>
-        <script type="text/javascript" src='ports.js'></script>
-        <script type="text/javascript" src='scripts.js'></script>
     </head>
 
     <body>
+        <div id="scoreboard">
+            <span id="scoreboard_positive"></span>
+            <span id="scoreboard_negative"></span>
+        </div>
+
         <div id="header" class="container">
-            <h1>MoodViz <i>(beta)</i></h1>
+            <h1>M O O D V I Z</h1>
         </div>
 
         <div id="stats" class="container">
             <div id="about" class="column left">
                 <h3>About</h3>
-                <span style="text-align:justify"><p>MoodViz is a sentiment visualiser for Twitter. This is a minimum viable product (MVP) implementation - it is buggy! You are encouraged to contribute to the code.
-                    Check it out on GitHub at:</p></span>
-                <span style="text-align:center"><p>http://github.com/hadimichael/MoodViz</p></span>
+                <span style="text-align:justify"><p>MoodViz is a sentiment visualiser for Twitter. This is a minimum viable product (MVP)! You are encouraged to contribute to the code. Check it out at github.com/hadimichael.</p></span>
                 <span style="text-align:right"><p><i>@hadi_michael</i></p></span>
             </div>
-            <div id="stats_text" class="column middle">
+            <div id="stats_text" class="column right">
                 <h3>Tracking sentiment for: <span id="keywords"></span></h3>
                 <p>Positive tweets: <span id="positive"></span>
                 <br />Negative tweets: <span id="negative"></span>
                 <br />Neutral or undetermined: <span id="neutral"></span></p>
-                <hr />
+
                 <br /><span id="total"></span> tweets analysed since <span id="starttime"></span>
-            </div>
-            <div id="stats_graph" class="column right">
-                <div id="donut" class="graph"></div>
             </div>
         </div>
         
+        <hr/>
+
         <div id="recent_tweets" class="container">
-            <h3>Some recent tweets</h3>
+            <span class="container"><h3>some recent tweets</h3></span>
             <ul id="recent_tweets_ticker" class="ticker">
             </ul>
         </div>
+
+        <!-- include JS files -->
+        <script type="text/javascript" src='http://code.jquery.com/jquery-1.7.2.min.js'></script>
+        <script src='/jquery.flot/jquery.flot.js'></script>
+        <script type="text/javascript" src="/jquery.flot/jquery.flot.pie.js"></script>
+        <script type="text/javascript" src='scripts.js'></script>
     </body>
 
 </html>

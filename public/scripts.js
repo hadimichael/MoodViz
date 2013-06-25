@@ -26,10 +26,11 @@ $(function(){
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = window.location.origin.replace(ports.getFileServerPort().toString(),ports.getWebsocketPort().toString()) + '/socket.io/socket.io.js';
+    //script.src = window.location.origin.replace(ports.getFileServerPort().toString(),ports.getWebsocketPort().toString()) + '/socket.io/socket.io.js';
+    script.src = window.location.origin + '/socket.io/socket.io.js';
 
     script.onload = function() { 
-        var socket = io.connect(window.location.origin.replace(ports.getFileServerPort().toString(),ports.getWebsocketPort().toString())); 
+        var socket = io.connect(window.location.origin); 
 
         var getTweets_data = {
           keywords: ['telstra', 'new york'], // in an array format
@@ -40,29 +41,32 @@ $(function(){
         socket.on('connected', function (message) {
             console.log(message); //display message
 
-            //USE THIS TO DEBUG THE UI!
+            // //USE THIS TO DEBUG THE UI!
             // counter = 0;
             // for (var i = 0;i<5;i++) {
             //   if (counter > 4) {counter = 0}
             //   var polarity = getPolarity(counter.toString());
-            //   var $res = $('<li class=\'' + polarity + '\'><span class=\'ticker-image\'>');
-            //   $res.append('<img src=\"https://si0.twimg.com/profile_images/3355622120/abe783444f418c35d3aff56f6ba98d6a_bigger.png\" /></span>');
+            //   var $res = $('<li class=\'' + polarity + '\'>');
+            //   $res.append('<img src=\"https://si0.twimg.com/profile_images/3355622120/abe783444f418c35d3aff56f6ba98d6a_bigger.png\" />');
             //   $res.append('<span class=\'ticker-text\'>' + 'This is a short tweet about this cool website' + '</span>');
             //   $res.prependTo($('#recent_tweets_ticker'));
             //   counter += 2;
             // }
             // updateStats(getTweets_data);
+            // return;
 
             //set start time
             var starttime = new Date();
             $('#starttime').text(starttime.today() + " at " + starttime.timeNow());
+
+            // make a request for tweets
             socket.emit('getTweets', getTweets_data);
         });
 
         var tickerCount = 0, tickerSize = 5;
         socket.on(getTweets_data.respondOn, function (response) {
             //var tweet = "Polarity: " + response.tweet_polarised.results.polarity.toString() + " for: " + response.tweet_polarised.results.text.toString();
-            //console.log(response);
+            console.log(response);
 
             var polarity = getPolarity(response.tweet_polarised.results.polarity.toString());
             var $res = $('<li class=\'' + polarity + '\'><span class=\'ticker-image\'>');
@@ -117,8 +121,12 @@ $(function(){
         { label: "Negative",  data: stats.negatives, color: 'rgba(255, 0, 0, .5)'},
       ];
 
+      var width = $(window).width();
+      $('#scoreboard_positive').width(stats.positives*width/(stats.positives+stats.negatives));
+      $('#scoreboard_negative').width(stats.negatives*width/(stats.positives+stats.negatives));
+
       // plot on DONUT
-      $.plot($("#donut"), data, 
+      /*plot($("#donut"), data, 
       {
         series: {
           pie: { 
@@ -129,7 +137,7 @@ $(function(){
             },
           }
         },
-      });
+      });*/
     }
 });
 
