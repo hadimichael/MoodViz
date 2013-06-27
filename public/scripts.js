@@ -32,6 +32,18 @@ $(function(){
     script.onload = function() { 
         var socket = io.connect(window.location.origin); 
 
+        socket.on('connected', function (message) {
+            console.log(message); //display message
+
+            var keywords = ['new york', 'lunch'];
+            socket.emit('stream.track', keywords);
+
+            socket.on('helloworld', function (data) {
+                console.log(data);
+            });
+        });
+
+        /*
         var getTweets_data = {
           keywords: ['telstra', 'new york'], // in an array format
           mode: 'stream',
@@ -40,7 +52,7 @@ $(function(){
 
         socket.on('connected', function (message) {
             console.log(message); //display message
-
+            console.log("asdfasdfasdF: " + socket.id)
             // //USE THIS TO DEBUG THE UI!
             // counter = 0;
             // for (var i = 0;i<5;i++) {
@@ -60,7 +72,8 @@ $(function(){
             $('#starttime').text(starttime.today() + " at " + starttime.timeNow());
 
             // make a request for tweets
-            socket.emit('getTweets', getTweets_data);
+            //socket.emit('getTweets', getTweets_data);
+            socket.emit('stream.track', getTweets_data.respondOn, getTweets_data.keywords);
         });
 
         var tickerCount = 0, tickerSize = 5;
@@ -79,6 +92,7 @@ $(function(){
 
             updateStats(getTweets_data);           
         });
+        */
     };
 
     // fire the loading
