@@ -22,6 +22,18 @@ $(function(){
       return ((this.getHours() < 10)?"0":"") + this.getHours() +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes();// +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds();
     };
 
+    $.ajax({
+      url: FB_ACCESS_TOKEN_QUERY_URL,
+      error: function(error) {
+        //response.write("{\"response\": false, \"message\": \"Could not secure an access token.\"}");
+        //response.end(); 
+        //TODO: maybe send us an email or issue an admin dashboard notification
+      },
+      success: function(accesstoken) {
+        // fire the loading
+    head.appendChild(script);
+  }
+
     // adding the script tag to the head as suggested before
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
@@ -35,14 +47,13 @@ $(function(){
         socket.on('connected', function (message) {
             console.log(message); //display message
 
-            var keywords = ['new york', 'lunch'];
-            socket.emit('stream.track', keywords);
-
             socket.on('helloworld', function (data) {
                 console.log(data);
             });
         });
+        };
 
+        
         /*
         var getTweets_data = {
           keywords: ['telstra', 'new york'], // in an array format
@@ -93,10 +104,9 @@ $(function(){
             updateStats(getTweets_data);           
         });
         */
-    };
 
-    // fire the loading
-    head.appendChild(script);
+
+    
 
     function getPolarity(polarity) {
       switch (polarity) {
