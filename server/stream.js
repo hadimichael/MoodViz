@@ -32,7 +32,7 @@ exports.follow = function (socket, userIDs) {
 }
 
 function startStream(io, action) {
-	var broadcastChannel = require('./server/tunein').getChannel();
+	var broadcastChannel = require('./tunein').getChannel();
 
 	// verify login details
 	console.log('Verifying twitter credentials...');
