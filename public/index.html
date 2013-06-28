@@ -7,13 +7,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
         <!-- include stylesheets -->
-        <link rel="stylesheet" type="text/css" href="styles.css">
+        <link rel="stylesheet" type="text/css" href="./home.css">
     </head>
 
     <body>
         <div id="scoreboard">
-            <span id="scoreboard_positive"></span>
-            <span id="scoreboard_negative"></span>
+            <span id="scoreboard_positive" class="scoreboard"></span>
+            <span id="scoreboard_negative" class="scoreboard"></span>
         </div>
 
         <div id="header" class="container">
@@ -21,27 +21,24 @@
         </div>
 
         <div id="stats" class="container">
-            <div id="about" class="column left">
-                <h3>About</h3>
-                <span style="text-align:justify"><p>MoodViz is a sentiment visualiser for Twitter. This is a minimum viable product (MVP)! You are encouraged to contribute to the code. Check it out at github.com/hadimichael.</p></span>
-                <span style="text-align:right"><p><i>@hadi_michael</i></p></span>
+            <div class="column left">
+                <span id="positive" class="score">xx</span>
             </div>
-            <div id="stats_text" class="column right">
-                <h3>Tracking sentiment for: <span id="keywords"></span></h3>
-                <p>Positive tweets: <span id="positive"></span>
-                <br />Negative tweets: <span id="negative"></span>
-                <br />Neutral or undetermined: <span id="neutral"></span></p>
 
-                <br /><span id="total"></span> tweets analysed since <span id="starttime"></span>
+            <div class="column middle">
+                <span id="undetermined" class="score">xx</span>
+            </div>
+
+            <div class="column right">
+                <span id="negative" class="score">xx</span>
             </div>
         </div>
         
-        <hr/>
+        <hr />
 
         <div id="recent_tweets" class="container">
-            <span class="container"><h3>some recent tweets</h3></span>
-            <ul id="recent_tweets_ticker" class="ticker">
-            </ul>
+            <span class="container"><h3><span id="doing"></span> sentiment for <span id="what"></span> since <span id="starttime"></span></h3></span>
+            <ul id="recent_tweets_ticker" class="ticker"></ul>
         </div>
 
         <!-- include JS files -->

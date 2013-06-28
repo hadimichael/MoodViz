@@ -1,8 +1,7 @@
 /*
- * styles.css -> Primary stylesheet
  *
- * Author: @hadi_michael
- * Date: May 2013
+ * @author: @hadi_michael
+ * @date: May-July 2013
  *
  */
 
@@ -20,68 +19,77 @@ html, body {
 }
 /***** /general *****/
 
-/***** colourbar *****/
+/***** scoreboard *****/
+.scoreboard {
+	width: 50%;
+	height: 100%;
+}
+
 #scoreboard {
 	display: block;
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 50px;
+	height: 60px;
 }
 
 #scoreboard_positive {
-	background-color: green;
-	width: 75%;
+	background-color: #00FF00;
 	float: left;
-	height: 100%;
 }
 
 #scoreboard_negative {
-	background-color: red;
-	width: 25%;
+	background-color: #FF0000;;
 	float: right;
-	height: 100%;
 }
-/***** /colourbar *****/
+/***** /scoreboard *****/
 
 /***** header *****/
 #header {
 	text-align: center;
-	top: 100px;
 }
 /***** /header *****/
 
 /***** stats *****/
 #stats {
-	display: block;	
-	height: 200px;
+	display: block;
+	margin-top: 2%;
+	margin-bottom: 2%;
 }
 
-#stats h3 {
-	margin: 0px;
-}
-
-#stats .column {
-	vertical-align:text-top;
+.column {
+	vertical-align: text-top;
+	text-align: center;
 	display: inline-block;	 
+	/*border: 1px solid;*/
 }
 
-#stats .left{
-	width: 45%;
+.left{
+	width: 30%;
 	float: left;
 }
 
-#stats .right{
-	width: 45%;
+.middle{
+	width: 30%;
+	margin-left: 4%;
+}
+
+.right{
+	width: 30%;
 	float: right;
 }
 
-#stats .graph {
-	padding: 10px;
-	margin: 10px;
-	position: relative;
-	width: 250px;
-	height: 150px;
+.score {
+	font-size: 70pt;
+}
+
+#positive {
+	color: #00FF00;
+}
+
+
+#negative {
+	color: #FF0000;
 }
 
 hr {
