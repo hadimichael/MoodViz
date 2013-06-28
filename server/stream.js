@@ -1,7 +1,7 @@
 /*
- * @description: does cool stuff...
+ *
  * @author: @hadi_michael
- * @date: May 2013
+ * @date: May-July 2013
  *
  */
 
@@ -31,8 +31,8 @@ exports.follow = function (socket, userIDs) {
 	startStream(socket, { follow: userIDs });
 }
 
-function startStream(socket, action) {
-	var broadcastChannel = 'helloworld';
+function startStream(io, action) {
+	var broadcastChannel = require('./server/tunein').getChannel();
 
 	// verify login details
 	console.log('Verifying twitter credentials...');
@@ -59,7 +59,7 @@ function startStream(socket, action) {
 				            		//console.log(body);
 				              		var polarised_tweet = JSON.parse(body);
 				              		// tell the world!
-				              		socket.emit(broadcastChannel, {'raw_tweet': raw_tweet, 'polarised_tweet': polarised_tweet });
+				              		io.sockets.emit(broadcastChannel, {'raw_tweet': raw_tweet, 'polarised_tweet': polarised_tweet });
 								} catch (err) {
 				            		console.error('JSON did not parse. ' + err);
 				            	}
