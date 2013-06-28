@@ -45,13 +45,10 @@ try {
 /***** /SETUP AND START SERVER *****/
 
 /***** MANAGE SOCKETS *****/
-var action = {
-		doing: 'nothing',
-		what: ':('
-	}
+var action = { doing: 'nothing', what: ':(' }; //TODO: find better variable names
 io.set('log level', 2); // set socket.io logging (Log levels: 0 - error / 1 - warn / 2 - info / 3 - debug)
 io.sockets.on('connection', function (socket) {
-	
+
 	console.log('New user connected: ' + socket.id);
   	socket.emit('connected', { hello: 'Welcome to the party!', currently: action });
 
@@ -71,6 +68,8 @@ io.sockets.on('connection', function (socket) {
 	socket.on('search', function(keywords) {
 		//COMING SOON!
 		//require('./server/search').search(keywords);
+		//action.doing = "searching";
+		//action.what = keywords;
 	});
 
 	socket.on('disconnect', function () {
