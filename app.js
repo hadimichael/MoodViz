@@ -1,7 +1,7 @@
 /*
- * @description: node.js server
+ *
  * @author: @hadi_michael
- * @date: May 2013
+ * @date: May-July 2013
  *
  */
 
@@ -20,6 +20,11 @@ process.on('uncaughtException', function(err) {
 /***** /HANDLE Uncaught Exceptions *****/
 
 /***** SETUP AND START SERVER *****/
+// route to allow front-end to retrieve broadcast channel
+app.get('/tunein', function(req,res) {
+	res.send(require('./server/tunein').getChannel());
+});
+
 // configure the server
 app.configure(function(){
 	app.use(express.bodyParser());
@@ -46,17 +51,13 @@ io.sockets.on('connection', function (socket) {
 	console.log('New user connected: ' + socket.id);
   	socket.emit('connected', { hello: 'Welcome to the party!' });
 
-  	/* define socket events */
-  	socket.on('tunein', function(something) {
-		//TODO: add this person the list of people listening to the stream...
-	});
-	
+  	/* define socket events */	
 	socket.on('stream.track', function(keywords) {
-		require('./server/stream').track(socket, keywords);
+		require('./server/stream').track(io, keywords);
 	});
 	
 	socket.on('stream.follow', function(userIDs) {
-		require('./server/stream').follow(socket, userIDs);
+		require('./server/stream').follow(io, userIDs);
 	});
 
 	socket.on('search', function(keywords) {
