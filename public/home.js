@@ -27,8 +27,10 @@ $(function(){
       script.onload = function() { 
           var socket = io.connect(window.location.origin); 
 
+          //
           var tickerCount = 0, tickerSize = 5;
-          
+          //
+
           socket.on('connected', function (message) {
               console.log(message); //display message
               
