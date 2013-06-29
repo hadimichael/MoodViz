@@ -45,7 +45,7 @@ try {
 /***** /SETUP AND START SERVER *****/
 
 /***** MANAGE SOCKETS *****/
-var action = { doing: 'nothing', what: ':(' }; //TODO: find better variable names
+var action = { doing: 'nothing', to: 'no one :(' };
 io.set('log level', 2); // set socket.io logging (Log levels: 0 - error / 1 - warn / 2 - info / 3 - debug)
 io.sockets.on('connection', function (socket) {
 
@@ -55,14 +55,12 @@ io.sockets.on('connection', function (socket) {
   	/* define socket events */	
 	socket.on('stream.track', function(keywords) {
 		require('./server/stream').track(io, keywords);
-		action.doing = "tracking";
-		action.what = keywords;
+		action = { doing: 'tracking', to: keywords };
 	});
 	
 	socket.on('stream.follow', function(userIDs) {
 		require('./server/stream').follow(io, userIDs);
-		action.doing = "following";
-		action.what = userIDs;
+		action = { doing: 'following', to: userIDs };
 	});
 
 	socket.on('search', function(keywords) {
