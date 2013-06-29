@@ -49,7 +49,7 @@ function startStream(io, action) {
 						//console.log(raw_tweet);
 
 						//skip tweets that are not in English
-						if (raw_tweet.user.lang != 'en') {return; }
+						if (raw_tweet.user.lang != 'en' || raw_tweet.user.lang == 'undefined') {return; }
 
 						// make GET request to Sentiment140 API
 				        request(s140.simple(raw_tweet), function (error, response, body) {
@@ -72,10 +72,12 @@ function startStream(io, action) {
 
 				    stream.on('end', function (response) {
 						// Handle a disconnection
+						console.log('Twitter connection ended');
 					});
 					
 					stream.on('destroy', function (response) {
 						// Handle a 'silent' disconnection from Twitter, no end/error event fired
+						console.log('Twitter connection disconnected silently');
 					});
 			    }
 			);
