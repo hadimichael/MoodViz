@@ -1,14 +1,14 @@
 /*
- * @description: does cool stuff...
+ *
  * @author: @hadi_michael
- * @date: May 2013
+ * @date: May-July 2013
  *
  */
 
 var app_creds 	= require('./app_credentials'), //see app_credentials__template.js
 	s140_appId 	= app_creds.getSentiment140AppId();
 
-/* Prepare data for Sentiment140 API */
+/* Prepare request for Sentiment140 API */
 var s140_requestBuilder = {
 	url				: 'http://www.sentiment140.com/api/',
 	simpleClassify 	: 'classify',
@@ -44,4 +44,4 @@ exports.bulk = {
 		}
 	},
 }
-/* /Prepare data for Sentiment140 API */
+/* /Prepare request for Sentiment140 API */
