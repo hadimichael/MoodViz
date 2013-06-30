@@ -55,7 +55,7 @@ $(function(){
               /* /DEBUG THE TICKER */
 
               socket.on(channel, function (response) {
-                console.log(response);
+                //console.log(response);
 
                 var polarity = getPolarity(response.polarised_tweet.results.polarity.toString());
                 
