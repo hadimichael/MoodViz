@@ -20,12 +20,7 @@ html, body {
 /***** /general *****/
 
 /***** scoreboard *****/
-.scoreboard {
-	width: 50%;
-	height: 100%;
-}
-
-#scoreboard {
+#visualiser {
 	display: block;
 	top: 0;
 	left: 0;
@@ -33,13 +28,18 @@ html, body {
 	height: 60px;
 }
 
-#scoreboard_positive {
-	background-color: #00FF00;
+.scorebar_item {
+	width: 50%;
+	height: 100%;
+}
+
+#scorebar_positive {
+	background-color: #00aa00;
 	float: left;
 }
 
-#scoreboard_negative {
-	background-color: #FF0000;;
+#scorebar_negative {
+	background-color: #aa0000;;
 	float: right;
 }
 /***** /scoreboard *****/
@@ -51,7 +51,7 @@ html, body {
 /***** /header *****/
 
 /***** stats *****/
-#stats {
+#scoreboard {
 	display: block;
 	margin-top: 2%;
 	margin-bottom: 2%;
@@ -71,7 +71,7 @@ html, body {
 
 .middle{
 	width: 30%;
-	margin-left: 4%;
+	margin-left: 5%;
 }
 
 .right{
@@ -80,16 +80,16 @@ html, body {
 }
 
 .score {
-	font-size: 70pt;
+	font-size: 100px;
 }
 
-#positive {
-	color: #00FF00;
+.positive {
+	color: #00aa00;
 }
 
 
-#negative {
-	color: #FF0000;
+.negative {
+	color: #aa0000;
 }
 
 hr {
@@ -100,6 +100,17 @@ hr {
 	height: 2px;
 }
 /***** /stats *****/
+
+/***** description *****/
+.action {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+#description {
+	text-align: center;
+}
+/***** /description *****/
 
 /***** recent_tweets *****/
 .ticker {
@@ -113,24 +124,33 @@ hr {
 }
 
 .ticker li {
-	border-bottom: 1px dotted #6d7180;
+	border-bottom: 1px solid #DDDDDD;
 	padding: 10px;
 	margin: 0px;
 	display: list-item;
 	overflow: hidden;
 	font-size: 1.4em;
+	height: 70px;
 }
 
-.ticker li.positive {
-	background-color: white; /* rgba(0, 255, 0, .1); */
+.ticker-indicator.positive {
+	background-color: #00aa00;
 }
 
-.ticker li.neutral {
-	background-color: white; /* rgba(0, 0, 255, .1); */
+.ticker-indicator.undetermined {
+	background-color: white;
 }
 
-.ticker li.negative {
-	background-color: white; /* rgba(255, 0, 0, .1); */
+.ticker-indicator.negative {
+	background-color: #aa0000;
+}
+
+.ticker-indicator {
+	float: right;
+	height: 70px;
+	width: 7px;
+	/*margin-right: 10px;*/
+	margin-left: 15px;
 }
 
 .ticker img {

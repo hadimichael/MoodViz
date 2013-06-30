@@ -11,33 +11,41 @@
     </head>
 
     <body>
-        <div id="scoreboard">
-            <span id="scoreboard_positive" class="scoreboard"></span>
-            <span id="scoreboard_negative" class="scoreboard"></span>
+        <div id="visualiser">
+            <span id="scorebar_positive" class="scorebar_item"></span>
+            <span id="scorebar_negative" class="scorebar_item"></span>
         </div>
 
         <div id="header" class="container">
             <h1>M O O D V I Z</h1>
         </div>
 
-        <div id="stats" class="container">
+        <div id="scoreboard" class="container">
             <div class="column left">
-                <span id="positive" class="score">xx</span>
+                <span id="positive" class="score positive">____</span>
+                <br />Positive Tweets
             </div>
 
             <div class="column middle">
-                <span id="undetermined" class="score">xx</span>
+                <span id="undetermined" class="score">______</span>
+                <br />Undetermined or Neutral Tweets
             </div>
 
             <div class="column right">
-                <span id="negative" class="score">xx</span>
+                <span id="negative" class="score negative">____</span>
+                <br />Negative Tweets
             </div>
         </div>
         
         <hr />
 
+        <div id="description" class="container">
+            <p><span class="action"><span id="doing">&lt;doing&gt;</span> sentiment for "<i><span id="to">&lt;to&gt;</span></i>"</span>
+            <br/><span>Analysed <span id="total">&lt;______&gt;</span> tweets, since <span id="starttime"></span></span></p>
+        </div>
+
         <div id="recent_tweets" class="container">
-            <span class="container"><h3><span id="doing"></span> sentiment for <span id="what"></span> since <span id="starttime"></span></h3></span>
+            
             <ul id="recent_tweets_ticker" class="ticker"></ul>
         </div>
 
