@@ -38,8 +38,9 @@ function submit() {
                 });
 
                 socket.on(channel, function (response) {
-                    console.log(response);
-                    document.write(JSON.stringify(response));
+                    // console.log(response);
+                    // document.write(JSON.stringify(response));
+                    window.location = window.location.origin;
                 });
             };
 
