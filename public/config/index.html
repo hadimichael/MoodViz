@@ -5,12 +5,25 @@
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+         <!-- include JS files -->
+        <script type="text/javascript" src='http://code.jquery.com/jquery-1.7.2.min.js'></script>
+        <script type="text/javascript" src='config.js'></script>
     </head>
 
     <body>
-        <!-- include JS files -->
-        <script type="text/javascript" src='http://code.jquery.com/jquery-1.7.2.min.js'></script>
-        <script type="text/javascript" src='config.js'></script>
+        <form action="javascript:submit()">
+            <p>Doing:
+                <br /><input type="radio" name="action.doing" value="stream.track">stream.track
+                <br /><input type="radio" name="action.doing" value="stream.follow">stream.follow
+            </p>
+
+            <p>To (comma-seperated):
+                <br /><input name="text" type="text"></input>
+            </p>
+            
+            <input type="submit" value="Let's go!">
+        </form>
     </body>
 
 </html>
